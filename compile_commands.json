@@ -1,0 +1,104 @@
+[
+{
+  "directory": "/home/ahteh/Developer/unhash/build/ext/binfuse/ext/xor_singleheader/tests",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icx  -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -g -Rno-debug-disables-optimization -g -O2 -Wall -Wextra -Wshadow -Wcast-qual -Wconversion -Wsign-conversion -Werror -fsanitize=address,undefined -o CMakeFiles/unit.dir/unit.c.o -c /home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/tests/unit.c",
+  "file": "/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/tests/unit.c",
+  "output": "ext/binfuse/ext/xor_singleheader/tests/CMakeFiles/unit.dir/unit.c.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/ext/binfuse/ext/xor_singleheader/benchmarks",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icx  -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -g -Rno-debug-disables-optimization -o CMakeFiles/bench.dir/bench.c.o -c /home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/benchmarks/bench.c",
+  "file": "/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/benchmarks/bench.c",
+  "output": "ext/binfuse/ext/xor_singleheader/benchmarks/CMakeFiles/bench.dir/bench.c.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/ext/binfuse/ext/xor_singleheader/benchmarks",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icx  -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -g -Rno-debug-disables-optimization -o CMakeFiles/spaceusage.dir/spaceusage.c.o -c /home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/benchmarks/spaceusage.c",
+  "file": "/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/benchmarks/spaceusage.c",
+  "output": "ext/binfuse/ext/xor_singleheader/benchmarks/CMakeFiles/spaceusage.dir/spaceusage.c.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/ext/binfuse/test",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest -g -Rno-debug-disables-optimization -fsanitize=address,undefined,leak -std=c++23 -Wall -Wextra -Wpedantic -Wshadow -Wextra-semi -Wmissing-noreturn -Wconversion -Wsign-conversion -Wno-ignored-attributes -Werror -o CMakeFiles/filter.dir/filter.cpp.o -c /home/ahteh/Developer/unhash/ext/binfuse/test/filter.cpp",
+  "file": "/home/ahteh/Developer/unhash/ext/binfuse/test/filter.cpp",
+  "output": "ext/binfuse/test/CMakeFiles/filter.dir/filter.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/ext/binfuse/test",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest -g -Rno-debug-disables-optimization -fsanitize=address,undefined,leak -std=c++23 -Wall -Wextra -Wpedantic -Wshadow -Wextra-semi -Wmissing-noreturn -Wconversion -Wsign-conversion -Wno-ignored-attributes -Werror -o CMakeFiles/sharded_filter.dir/sharded_filter.cpp.o -c /home/ahteh/Developer/unhash/ext/binfuse/test/sharded_filter.cpp",
+  "file": "/home/ahteh/Developer/unhash/ext/binfuse/test/sharded_filter.cpp",
+  "output": "ext/binfuse/test/CMakeFiles/sharded_filter.dir/sharded_filter.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/_deps/googletest-build/googlemock",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock/include -I/home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest -g -Rno-debug-disables-optimization -fsanitize=address,undefined,leak -std=c++23 -Wall -Wshadow -Wconversion -Wundef -Wno-implicit-float-size-conversion -ffp-model=precise -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Winline -Wredundant-decls -o CMakeFiles/gmock.dir/src/gmock-all.cc.o -c /home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "file": "/home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock/src/gmock-all.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/_deps/googletest-build/googlemock",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest -g -Rno-debug-disables-optimization -fsanitize=address,undefined,leak -std=c++23 -Wall -Wshadow -Wconversion -Wundef -Wno-implicit-float-size-conversion -ffp-model=precise -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Winline -Wredundant-decls -o CMakeFiles/gmock_main.dir/src/gmock_main.cc.o -c /home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "file": "/home/ahteh/Developer/unhash/build/_deps/googletest-src/googlemock/src/gmock_main.cc",
+  "output": "_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/_deps/googletest-build/googletest",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/include -I/home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest -g -Rno-debug-disables-optimization -fsanitize=address,undefined,leak -std=c++23 -Wall -Wshadow -Wconversion -Wundef -Wno-implicit-float-size-conversion -ffp-model=precise -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Winline -Wredundant-decls -o CMakeFiles/gtest.dir/src/gtest-all.cc.o -c /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "file": "/home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/src/gtest-all.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/_deps/googletest-build/googletest",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/include -isystem /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest -g -Rno-debug-disables-optimization -fsanitize=address,undefined,leak -std=c++23 -Wall -Wshadow -Wconversion -Wundef -Wno-implicit-float-size-conversion -ffp-model=precise -DGTEST_HAS_PTHREAD=1 -fexceptions -W -Wpointer-arith -Wreturn-type -Wcast-qual -Wwrite-strings -Wswitch -Wunused-parameter -Wcast-align -Winline -Wredundant-decls -o CMakeFiles/gtest_main.dir/src/gtest_main.cc.o -c /home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "file": "/home/ahteh/Developer/unhash/build/_deps/googletest-src/googletest/src/gtest_main.cc",
+  "output": "_deps/googletest-build/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/src",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/intel/oneapi/compiler/2025.0/include -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -O3 -march=native -DNDEBUG -fsycl-device-code-split=per_kernel -tbb -fsycl -o CMakeFiles/unhash_temp.dir/temp.cpp.o -c /home/ahteh/Developer/unhash/src/temp.cpp",
+  "file": "/home/ahteh/Developer/unhash/src/temp.cpp",
+  "output": "src/CMakeFiles/unhash_temp.dir/temp.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/src",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/intel/oneapi/compiler/2025.0/include -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -O3 -march=native -DNDEBUG -fsycl-device-code-split=per_kernel -tbb -fsycl -o CMakeFiles/unhash.dir/main.cpp.o -c /home/ahteh/Developer/unhash/src/main.cpp",
+  "file": "/home/ahteh/Developer/unhash/src/main.cpp",
+  "output": "src/CMakeFiles/unhash.dir/main.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/src",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/intel/oneapi/compiler/2025.0/include -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -O3 -march=native -DNDEBUG -fsycl-device-code-split=per_kernel -fsycl -o CMakeFiles/unhash_bench.dir/bench.cpp.o -c /home/ahteh/Developer/unhash/src/bench.cpp",
+  "file": "/home/ahteh/Developer/unhash/src/bench.cpp",
+  "output": "src/CMakeFiles/unhash_bench.dir/bench.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/src",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx  -I/home/ahteh/intel/oneapi/compiler/2025.0/include -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -O3 -march=native -DNDEBUG -fsycl-device-code-split=per_kernel -fsycl -o CMakeFiles/unhash_chunk.dir/chunk.cpp.o -c /home/ahteh/Developer/unhash/src/chunk.cpp",
+  "file": "/home/ahteh/Developer/unhash/src/chunk.cpp",
+  "output": "src/CMakeFiles/unhash_chunk.dir/chunk.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/test",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/miniconda3/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -o CMakeFiles/test_hash.dir/test_hash.cpp.o -c /home/ahteh/Developer/unhash/test/test_hash.cpp",
+  "file": "/home/ahteh/Developer/unhash/test/test_hash.cpp",
+  "output": "test/CMakeFiles/test_hash.dir/test_hash.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/test",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/miniconda3/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -o CMakeFiles/test_offset.dir/test_offset.cpp.o -c /home/ahteh/Developer/unhash/test/test_offset.cpp",
+  "file": "/home/ahteh/Developer/unhash/test/test_offset.cpp",
+  "output": "test/CMakeFiles/test_offset.dir/test_offset.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/test",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/miniconda3/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -o CMakeFiles/test_chunk.dir/test_chunk.cpp.o -c /home/ahteh/Developer/unhash/test/test_chunk.cpp",
+  "file": "/home/ahteh/Developer/unhash/test/test_chunk.cpp",
+  "output": "test/CMakeFiles/test_chunk.dir/test_chunk.cpp.o"
+},
+{
+  "directory": "/home/ahteh/Developer/unhash/build/test",
+  "command": "/home/ahteh/intel/oneapi/compiler/2025.0/bin/icpx -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -I/home/ahteh/Developer/unhash/include -I/home/ahteh/Developer/unhash/ext/binfuse/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/xor_singleheader/include -I/home/ahteh/Developer/unhash/ext/binfuse/ext/mio/include -isystem /home/ahteh/miniconda3/include -isystem /home/ahteh/intel/oneapi/tbb/2022.0/include -g -Rno-debug-disables-optimization -std=gnu++23 -o CMakeFiles/test_filter.dir/test_filter.cpp.o -c /home/ahteh/Developer/unhash/test/test_filter.cpp",
+  "file": "/home/ahteh/Developer/unhash/test/test_filter.cpp",
+  "output": "test/CMakeFiles/test_filter.dir/test_filter.cpp.o"
+}
+]

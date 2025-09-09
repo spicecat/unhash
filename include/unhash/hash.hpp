@@ -63,7 +63,7 @@ namespace unhash::hash
 
     // Encodes a string_view into a vector of character indices (chr)
     // Characters not found in CHARS are ignored.
-    constexpr enc encode(const string_view &input)
+    enc encode(const string_view &input)
     {
         enc encoding{};
         encoding.reserve(input.length());

@@ -5,7 +5,7 @@ project(unhash
     VERSION 0.1
     DESCRIPTION "Unhash TheLogFather project"
     HOMEPAGE_URL "https://github.com/spicecat/unhash"
-    LANGUAGES CXX
+    LANGUAGES C CXX
 )
 
 set(CMAKE_CXX_STANDARD 23)
@@ -20,8 +20,9 @@ target_include_directories(UNHASH INTERFACE
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
-target_link_libraries(UNHASH INTERFACE TBB::tbb)
 
+add_subdirectory(ext/binfuse)
+target_link_libraries(UNHASH INTERFACE binfuse sycl TBB::tbb)
 add_subdirectory(src)
 
 include(CTest)

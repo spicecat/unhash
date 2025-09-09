@@ -78,4 +78,3 @@ TEST(FilterTest, LargeRandomSetBuildsAndQueries)
         EXPECT_TRUE(filter.contains(k));
     }
 }
- 
