@@ -1,5 +1,6 @@
 name: unhash
 channels:
+  - https://software.repos.intel.com/python/conda
   - conda-forge
   - defaults
 dependencies:
@@ -7,3 +8,5 @@ dependencies:
   - ipykernel
   - numpy
   - numba
+  - dpnp
+  - dpctl

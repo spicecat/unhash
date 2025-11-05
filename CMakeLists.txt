@@ -3,7 +3,7 @@ set(CMAKE_CXX_COMPILER "icpx")
 
 project(unhash
     VERSION 0.1
-    DESCRIPTION "Unhash TheLogFather project"
+    DESCRIPTION "Unhash TheLogFather"
     HOMEPAGE_URL "https://github.com/spicecat/unhash"
     LANGUAGES C CXX
 )
