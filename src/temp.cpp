@@ -3,6 +3,7 @@
 #include "binfuse/sharded_filter.hpp"
 #include <iostream>
 #include <filesystem>
+#include <span>
 
 using std::cout;
 using std::endl;
@@ -16,9 +17,27 @@ using sycl::queue;
 using sycl::range;
 using sycl::read_only;
 
+bool contains(uint64_t key, const uint8_t* filter_data_ptr) {
+    return (fingerprint == (fingerprints_ptr[index0] ^ fingerprints_ptr[index1] ^ fingerprints_ptr[index2]));
+}
+
 int main(int argc, char **argv)
 {
-    std::cout << "Hello, World!!" << std::endl;
+    cout << "Hello, World!!" << endl;
+
+    binfuse::filter8 filter(std::vector<std::uint64_t>{
+        0x0000000000000000,
+        0x0000000000000001,
+        0x0000000000000002,
+    });
+
+    std::span<const binfuse::filter8::fingerprint_t> fingerprints = filter.fingerprints();
+    cout << "Fingerprints size: " << fingerprints.size() << endl;
+    for (size_t i = 0; i < fingerprints.size(); i++) {
+        cout << std::hex << std::setw(2) << std::setfill('0') << (int)fingerprints[i] << " ";
+    }
+    cout << endl;
+    
     std::filesystem::remove_all("tmp");
     std::filesystem::create_directories("tmp");
 
@@ -40,8 +59,8 @@ int main(int argc, char **argv)
 
     binfuse::sharded_filter16_source source("tmp/sharded_filter16_tiny.bin", 1);
 
-    std::cout << source.contains(0x0000000000000000) << std::endl;
-    std::cout << source.shards() << std::endl;
+    cout << source.contains(0x0000000000000000) << endl;
+    cout << source.shards() << endl;
 
     int num_threads = tbb::info::default_concurrency();
     const vector<device> devices = device::get_devices();
@@ -63,6 +82,9 @@ int main(int argc, char **argv)
         cout << "Local Memory Size: " << dev.get_info<sycl::info::device::local_mem_size>() << " bytes" << endl;
         cout << "Max Memory Alloc Size: " << dev.get_info<sycl::info::device::max_mem_alloc_size>() << " bytes" << endl;
     }
+
+    // const std::vector<uint8_t>& fingerprint_data = source.get_fingerprints();
+    // cout << source << endl;
 
     return 0;
 }

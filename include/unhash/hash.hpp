@@ -21,8 +21,8 @@ namespace unhash::hash
     using cont = uint_fast32_t; // Represents a hash segment contribution value
 
     // --- Constants ---
-    constexpr seg SEGMENTS = 4;            // Number of segments in final hash
     constexpr chr NCHARS = CHARS.length(); // Number of characters in CHARS
+    constexpr seg SEGMENTS = 4;            // Number of segments in final hash
     constexpr cont M = 100000;             // Hash segment range
     constexpr double A = 20000.0;          // Multiplier used contribution precision
     constexpr cont MA = M * A;             // Hash segment contribution range
