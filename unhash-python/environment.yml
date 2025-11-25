@@ -1,12 +1,11 @@
 name: unhash
 channels:
-  - https://software.repos.intel.com/python/conda
   - conda-forge
   - defaults
 dependencies:
   - python=3.12
   - ipykernel
+  - intel-cmplr-lib-rt
   - numpy
   - numba
-  - dpnp
-  - dpctl
+  - numba-cuda
