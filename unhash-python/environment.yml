@@ -4,6 +4,9 @@ channels:
   - defaults
 dependencies:
   - python=3.12
+  - google-api-python-client
+  - google-auth-httplib2
+  - google-auth-oauthlib
   - ipykernel
   - intel-cmplr-lib-rt
   - numpy
