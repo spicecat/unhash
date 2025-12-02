@@ -1,5 +1,3 @@
 build/
 .vscode/
 .codacy/
-credentials.json
-token.json
