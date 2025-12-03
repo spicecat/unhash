@@ -4,6 +4,7 @@ channels:
   - defaults
 dependencies:
   - python=3.12
+  - gh
   - git
   - google-api-python-client
   - google-auth-httplib2
