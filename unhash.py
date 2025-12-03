@@ -4,9 +4,6 @@
 # %% [markdown]
 # [https://scratch.mit.edu/projects/164028530](https://scratch.mit.edu/projects/164028530)
 
-# %% [markdown]
-# # Numba
-
 # %%
 # @title Import libraries
 
@@ -15,6 +12,9 @@ from numpy.typing import NDArray
 import numba as nb
 
 np.set_printoptions(formatter={"int": hex})
+
+# %% [markdown]
+# # Unhash
 
 # %% [markdown]
 # ## Hash
@@ -329,13 +329,18 @@ SERVICE = build("drive", "v3", credentials=creds)
 
 # %%
 # @title Define Log
+import sys
 import io
 import json
 
-
-LOG_FILE = "unhash_log.json"
 FOLDER_ID = "1savlD9Gk4rPuV4ibw4Zm8jv8fcReA4qH"
-FILE_ID = "1r-SDElZjQQdtqVXgXE2CyHtseMiL5TgQ"
+LOG_MAP = [
+    {"file": "unhash_log.json", "id": "1r-SDElZjQQdtqVXgXE2CyHtseMiL5TgQ"},
+    {"file": "unhash_log2.json", "id": "1XfF4iZlcZ6dnCv6GHSH8Bd-CZi4-qkXO"},
+]
+LOG_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 0
+LOG_FILE = LOG_MAP[LOG_INDEX]["file"]
+FILE_ID = LOG_MAP[LOG_INDEX]["id"]
 
 if not FILE_ID:
     LOG = {}
@@ -374,6 +379,10 @@ def update_log(data):
             FILE_ID = file.get("id")
     except Exception as e:
         print(f"\n[Log Error] Drive upload failed: {e}")
+
+
+update_log({"start": 5065052563052631040, "n_keys": 1000000000000000000, "found": [], "elapsed": 7802.577965736389, "progress": 0.14752314854363063, "speed": 18906.975255250236, "ETA": "12:31:27"})
+print(FILE_ID)
 
 # %%
 # @title Define search params
