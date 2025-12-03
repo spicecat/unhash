@@ -355,7 +355,7 @@ else:
     data = fh.read().decode("utf-8")
     LOG = json.loads(data)
 
-print(LOG)
+print(LOG_MAP[LOG_INDEX], LOG)
 
 
 def update_log(data):
@@ -379,10 +379,6 @@ def update_log(data):
             FILE_ID = file.get("id")
     except Exception as e:
         print(f"\n[Log Error] Drive upload failed: {e}")
-
-
-update_log({"start": 5065052563052631040, "n_keys": 1000000000000000000, "found": [], "elapsed": 7802.577965736389, "progress": 0.14752314854363063, "speed": 18906.975255250236, "ETA": "12:31:27"})
-print(FILE_ID)
 
 # %%
 # @title Define search params
