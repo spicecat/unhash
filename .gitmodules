@@ -1,3 +1,0 @@
-[submodule "ext/binfuse"]
-	path = ext/binfuse
-	url = https://github.com/oschonrock/binfuse.git
