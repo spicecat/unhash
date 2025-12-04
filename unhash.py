@@ -4,6 +4,19 @@
 # %% [markdown]
 # [https://scratch.mit.edu/projects/164028530](https://scratch.mit.edu/projects/164028530)
 
+# %% [markdown]
+# ```js
+# function ClickConnect(){
+#   console.log("Connnect Clicked - Start");
+#   document.querySelector("#top-toolbar > colab-connect-button").shadowRoot.querySelector("#connect").click();
+#   console.log("Connnect Clicked - End");
+# };
+# setInterval(ClickConnect, 10000)
+# ```
+
+# %% [markdown]
+# # Unhash
+
 # %%
 # @title Import libraries
 
@@ -12,9 +25,6 @@ from numpy.typing import NDArray
 import numba as nb
 
 np.set_printoptions(formatter={"int": hex})
-
-# %% [markdown]
-# # Unhash
 
 # %% [markdown]
 # ## Hash
@@ -51,7 +61,6 @@ assert decode(encode("abcdefghijklmnop")) == "abcdefghijklmnop"
 M = np.uint64(100_000)
 S = Char(4)
 
-
 def scale_htable(Con):
     assert np.issubdtype(Con, np.integer)
 
@@ -86,14 +95,6 @@ def scale_htable(Con):
 # %%
 # @title Define target
 
-# cbaaaaaadcbaaaaa: 43122, 62816, 54790, 81950
-# gfnagjfbjjpnikhp: 24295, 70808, 28723, 42152
-# fohdbbjbokjcfiha: 1218, 19828, 86010, 42474
-# faaaaaaafaaaaaaa: 45247, 46284, 11706, 55672
-# faaaaaaaaaaaaaaa: 83678, 89866, 80596, 35871
-# aaaaaaaaaaaaaaaa: 11801, 55301, 96631, 16025
-# 92227, 32143, 23135, 72362
-
 Enc = np.uint64
 NEnc = nb.types.uint64
 
@@ -119,7 +120,7 @@ V_TARGET = scale_target(VCon)
 VQ = VCon((np.iinfo(VCon).max + 1) // M)
 
 
-@nb.jit(nb.types.bool(NEnc))
+@nb.jit(nb.types.boolean(NEnc))
 def verify(b: Enc):
     for s in range(S):
         con = VCon(-V_TARGET[s])
@@ -296,19 +297,33 @@ def cu_search(
                             result[idx + 1] = b | b0 + 7
 
 # %% [markdown]
-# ## Run Search
+# ## Log
 
 # %%
 # @title Define drive
 
+import os
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
-from google.colab import auth
-from oauth2client.client import GoogleCredentials
 
-auth.authenticate_user()
-gauth = GoogleAuth()
-gauth.credentials = GoogleCredentials.get_application_default()
+
+if os.path.exists("client_secrets.json"):
+    with open("client_secrets.json", "r") as f:
+        client_secrets = f.read()
+else:
+    client_secrets = input("client_secrets.json: ")
+if client_secrets:
+    with open("client_secrets.json", "w") as f:
+        f.write(client_secrets)
+    gauth = GoogleAuth()
+    gauth.CommandLineAuth()
+else:
+    from google.colab import auth
+    from oauth2client.client import GoogleCredentials
+    auth.authenticate_user()
+    gauth = GoogleAuth()
+    gauth.credentials = GoogleCredentials.get_application_default()
+
 drive = GoogleDrive(gauth)
 
 # %%
@@ -316,24 +331,6 @@ drive = GoogleDrive(gauth)
 import json
 
 FOLDER_ID = "1savlD9Gk4rPuV4ibw4Zm8jv8fcReA4qH"
-# for i in range(16):
-#     f = drive.CreateFile(
-#         {
-#             "title": f"unhash_log_{i:x}.json",
-#             "parents": [{"id": FOLDER_ID}],
-#             "mimeType": "application/json",
-#         }
-#     )
-#     f.SetContentString(
-#         json.dumps(
-#             {
-#                 "start": i * (1 << 64) // 16,
-#                 "n_keys": (1 << 64) // 16,
-#                 "progress": 0,
-#             }
-#         )
-#     )
-#     f.Upload()
 
 LOGS = sorted(
     drive.ListFile(
@@ -343,94 +340,139 @@ LOGS = sorted(
     ).GetList(),
     key=lambda f: f["title"],
 )
-for file in LOGS:
-    print(f"{file['title']} {file['id']}")
-
-LOG_INDEX = int(input("LOG_INDEX: ") or 0)
-LOG_FILE = LOGS[LOG_INDEX]
-LOG = json.loads(LOG_FILE.GetContentString())
-print(LOG_FILE["title"], LOG_FILE["id"])
-print(LOG)
+for f in LOGS:
+    print(f"{f['title']} {f['id']}")
 
 # %%
-# @title Define log
+# @title Define update_log
 
-def update_log(data):
+import logging
+import sys
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(threadName)s - %(message)s",
+    datefmt="%H:%M:%S",
+    stream=sys.stdout,
+    force=True,
+)
+
+
+def update_log(log_file, data):
     try:
-        LOG_FILE.SetContentString(json.dumps(data))
-        LOG_FILE.Upload()
+        if gauth.access_token_expired:
+            if client_secrets:
+                gauth.Refresh()
+            else:
+                from google.colab import auth
+                from oauth2client.client import GoogleCredentials
+                auth.authenticate_user()
+                gauth.credentials = GoogleCredentials.get_application_default()
+        log_file.SetContentString(json.dumps(data))
+        log_file.Upload()
     except Exception as e:
-        print(f"\n[Log Error] Drive upload failed: {e}")
-# %%
-# @title Define search params
+        logging.error(f"Drive upload failed: {e}")
 
-start = LOG.get("start")
-n_keys = LOG.get("n_keys")
-progress = LOG.get("progress")
-
-threads = 256
-blocks = 4096
-
-print(f"{start=:_} {n_keys=:_} {progress=}")
-start = int(start + progress * n_keys) - threads * blocks * 256
-print(f"{start=:_}")
+# %% [markdown]
+# 
+# ## Run
 
 # %%
-# @title Run search
-
-CU_HTABLE = cuda.to_device(scale_htable(Con))
-CU_TARGET = cuda.to_device(scale_target(Con))
-
-result = cuda.mapped_array(4, dtype=Enc)
-tick = cuda.mapped_array(1, dtype=Enc)
-result[:] = tick[:] = 0
+# @title Define load_log
 
 
-cu_search[blocks, threads](Enc(start), Enc(n_keys), CU_HTABLE, CU_TARGET, result, tick)
+def load_log(log_index):
+    log_file = LOGS[log_index]
+    log = json.loads(log_file.GetContentString())
+    logging.info(f"{log_file['title']}, {log_file['id']}")
+    logging.info(json.dumps(log))
+    return log_file, log
 
 # %%
-# @title Track progress
+# @title Define run_search
+
+
+def run_search(log):
+    threads = 256
+    blocks = 4096
+
+    log["start"] = (
+        int(log["start"] + log["progress"] * log["n_keys"]) - threads * blocks * 256
+    )
+    logging.info(f"{log['start']=:_}")
+
+    cu_htable = cuda.to_device(scale_htable(Con))
+    cu_target = cuda.to_device(scale_target(Con))
+
+    result = cuda.mapped_array(4, dtype=Enc)
+    tick = cuda.mapped_array(1, dtype=Enc)
+    result[:] = tick[:] = 0
+
+    cu_search[blocks, threads](
+        Enc(log["start"]), Enc(log["n_keys"]), cu_htable, cu_target, result, tick
+    )
+
+    return result, tick
+
+# %%
+# @title Define track_progress
 
 import time
-import sys
 import datetime
 
-LOG["start"] = start
-LOG["n_keys"] = n_keys
-LOG["found"] = LOG.get("found", [])
 
-start_time = time.time()
-ticks = max(1, n_keys // 256 // 0x100000)
+def track_progress(log_file, log, result, tick):
+    start_time = time.time()
+    ticks = max(1, log["n_keys"] // 256 // 0x100000)
 
-while tick[0] < ticks - 1:
-    count = result[0]
-    if count:
-        result[0] = 0
-        res = result[1 : count + 1]
-        print(f"Check: {res}")
-        for r in res:
-            if verify(r):
-                print(f"Found: {r}")
-                LOG["found"].append(r)
+    while tick[0] < ticks - 1:
+        count = int(result[0])
+        if count:
+            result[0] = 0
+            res = result[1 : count + 1]
+            logging.info(f"Check: {res}")
+            for r in res:
+                if verify(r):
+                    logging.info(f"Found: {r}")
+                    log["found"].append(r)
 
-    t = tick[0]
-    elapsed = time.time() - start_time
-    progress = t / ticks
-    speed = t * 0x100000 * 256 / elapsed / 1e9
-    eta = elapsed / t * (ticks - t) if t else 0
+        t = tick[0]
+        elapsed = time.time() - start_time
+        progress = t / ticks
+        speed = t * 0x100000 * 256 / elapsed / 1e9
+        eta = elapsed / t * (ticks - t) if t else 0
 
-    LOG["elapsed"] = elapsed
-    LOG["progress"] = progress
-    LOG["speed"] = speed
-    LOG["ETA"] = str(datetime.timedelta(seconds=int(eta)))
-    sys.stdout.write(f"\r")
-    sys.stdout.write(json.dumps(LOG))
-    sys.stdout.flush()
+        log["elapsed"] = elapsed
+        log["progress"] = progress
+        log["speed"] = speed
+        log["ETA"] = str(datetime.timedelta(seconds=int(eta)))
+        logging.info(json.dumps(log))
+        update_log(log_file, log)
 
-    update_log(LOG)
+        time.sleep(30)
 
-    time.sleep(30)
+    cuda.synchronize()
 
-cuda.synchronize()
+# %% [markdown]
+# ## Main
+
+# %%
+# @title Run main
+
+import threading
+
+
+def worker(log_index=0, device_id=0):
+    cuda.select_device(device_id)
+    log_file, log = load_log(log_index)
+    result, tick = run_search(log)
+    track_progress(log_file, log, result, tick)
+
+
+cuda.detect()
+
+for i in range(len(cuda.gpus)):
+    log_index = int(input("log_index: ") or 0)
+    threading.Thread(target=worker, args=(log_index, i,), name=f"GPU-{i}").start()
 
 

@@ -6,11 +6,11 @@ dependencies:
   - python=3.12
   - gh
   - git
-  - google-api-python-client
-  - google-auth-httplib2
-  - google-auth-oauthlib
   - ipykernel
   - intel-cmplr-lib-rt
   - numpy
   - numba
   - numba-cuda
+  - pip
+  - pip:
+      - PyDrive2
