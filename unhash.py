@@ -1,5 +1,5 @@
 # %% [markdown]
-# <a href="https://colab.research.google.com/github/spicecat/unhash/blob/main/unhash.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+# <a href="https://colab.research.google.com/github/spicecat/unhash/blob/main/unhash_0.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # %% [markdown]
 # [https://scratch.mit.edu/projects/164028530](https://scratch.mit.edu/projects/164028530)
@@ -97,9 +97,7 @@ def scale_htable(Con):
 Enc = np.uint64
 NEnc = nb.types.uint64
 
-TARGET = np.array([45247, 46284, 11706, 55672], dtype=np.uint64)
-# TARGET = np.array([83678, 89866, 80596, 35871], dtype=np.uint64)
-# TARGET = np.array([92227, 32143, 23135, 72362], dtype=np.uint64)
+TARGET = np.array([92227, 32143, 23135, 72362], dtype=np.uint64)
 
 
 def scale_target(Con):
@@ -301,102 +299,81 @@ def cu_search(
 # ## Run Search
 
 # %%
-# @title Define Drive
-import os.path
+# @title Define drive
 
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload, MediaIoBaseUpload
+from pydrive2.auth import GoogleAuth
+from pydrive2.drive import GoogleDrive
+from google.colab import auth
+from oauth2client.client import GoogleCredentials
 
-
-SCOPES = ["https://www.googleapis.com/auth/drive.file"]
-
-creds = None
-if os.path.exists("token.json"):
-    creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-if not creds or not creds.valid:
-    if creds and creds.expired and creds.refresh_token:
-        creds.refresh(Request())
-    else:
-        flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
-        creds = flow.run_local_server(port=0)
-    with open("token.json", "w") as token:
-        token.write(creds.to_json())
-
-SERVICE = build("drive", "v3", credentials=creds)
+auth.authenticate_user()
+gauth = GoogleAuth()
+gauth.credentials = GoogleCredentials.get_application_default()
+drive = GoogleDrive(gauth)
 
 # %%
-# @title Define Log
-import sys
-import io
+# @title Define log
 import json
 
 FOLDER_ID = "1savlD9Gk4rPuV4ibw4Zm8jv8fcReA4qH"
-LOG_MAP = [
-    {"file": "unhash_log.json", "id": "1r-SDElZjQQdtqVXgXE2CyHtseMiL5TgQ"},
-    {"file": "unhash_log2.json", "id": "1XfF4iZlcZ6dnCv6GHSH8Bd-CZi4-qkXO"},
-]
-LOG_INDEX = int(sys.argv[1]) if len(sys.argv) > 1 else 0
-LOG_FILE = LOG_MAP[LOG_INDEX]["file"]
-FILE_ID = LOG_MAP[LOG_INDEX]["id"]
+# for i in range(16):
+#     f = drive.CreateFile(
+#         {
+#             "title": f"unhash_log_{i:x}.json",
+#             "parents": [{"id": FOLDER_ID}],
+#             "mimeType": "application/json",
+#         }
+#     )
+#     f.SetContentString(
+#         json.dumps(
+#             {
+#                 "start": i * (1 << 64) // 16,
+#                 "n_keys": (1 << 64) // 16,
+#                 "progress": 0,
+#             }
+#         )
+#     )
+#     f.Upload()
 
-if not FILE_ID:
-    LOG = {}
-else:
-    request = SERVICE.files().get_media(fileId=FILE_ID)
-    fh = io.BytesIO()
-    downloader = MediaIoBaseDownload(fh, request)
-    done = False
-    while not done:
-        status, done = downloader.next_chunk()
-    fh.seek(0)
-    data = fh.read().decode("utf-8")
-    LOG = json.loads(data)
+LOGS = sorted(
+    drive.ListFile(
+        {
+            "q": f"'{FOLDER_ID}' in parents and mimeType='application/json' and trashed=false"
+        }
+    ).GetList(),
+    key=lambda f: f["title"],
+)
+for file in LOGS:
+    print(f"{file['title']} {file['id']}")
 
-print(LOG_MAP[LOG_INDEX], LOG)
+LOG_INDEX = int(input("LOG_INDEX: ") or 0)
+LOG_FILE = LOGS[LOG_INDEX]
+LOG = json.loads(LOG_FILE.GetContentString())
+print(LOG_FILE["title"], LOG_FILE["id"])
+print(LOG)
 
+# %%
+# @title Define log
 
 def update_log(data):
-    global FILE_ID
     try:
-        media = MediaIoBaseUpload(
-            io.BytesIO(json.dumps(data).encode("utf-8")),
-            mimetype="application/json",
-            resumable=True,
-        )
-
-        if FILE_ID:
-            SERVICE.files().update(fileId=FILE_ID, media_body=media).execute()
-        else:
-            file_metadata = {"name": LOG_FILE, "parents": [FOLDER_ID]}
-            file = (
-                SERVICE.files()
-                .create(body=file_metadata, media_body=media, fields="id")
-                .execute()
-            )
-            FILE_ID = file.get("id")
+        LOG_FILE.SetContentString(json.dumps(data))
+        LOG_FILE.Upload()
     except Exception as e:
         print(f"\n[Log Error] Drive upload failed: {e}")
-
 # %%
 # @title Define search params
 
-start = 2_509_344_931_948_638_208 # @param {"type":"integer","placeholder":"0"}
-n_keys = 1_000_000_000_000_000_000  # @param {"type":"integer","placeholder":"100_000_000"}
-
-start = LOG.get("start", start)
-n_keys = LOG.get("n_keys", n_keys)
+start = LOG.get("start")
+n_keys = LOG.get("n_keys")
+progress = LOG.get("progress")
 
 threads = 256
 blocks = 4096
 
-progress = LOG.get("progress", 0.0)
 print(f"{start=:_} {n_keys=:_} {progress=}")
 start = int(start + progress * n_keys) - threads * blocks * 256
 print(f"{start=:_}")
-print(f"{(start + n_keys) / (1 << 64):.6}")
 
 # %%
 # @title Run search
