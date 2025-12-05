@@ -5,16 +5,6 @@
 # [https://scratch.mit.edu/projects/164028530](https://scratch.mit.edu/projects/164028530)
 
 # %% [markdown]
-# ```js
-# function ClickConnect(){
-#   console.log("Connnect Clicked - Start");
-#   document.querySelector("#top-toolbar > colab-connect-button").shadowRoot.querySelector("#connect").click();
-#   console.log("Connnect Clicked - End");
-# };
-# setInterval(ClickConnect, 10000)
-# ```
-
-# %% [markdown]
 # # Unhash
 
 # %%
@@ -359,15 +349,15 @@ logging.basicConfig(
 
 
 def update_log(log_file, data):
+    if gauth.access_token_expired:
+        if client_secrets:
+            gauth.Refresh()
+        else:
+            from google.colab import auth
+            from oauth2client.client import GoogleCredentials
+            auth.authenticate_user()
+            gauth.credentials = GoogleCredentials.get_application_default()
     try:
-        if gauth.access_token_expired:
-            if client_secrets:
-                gauth.Refresh()
-            else:
-                from google.colab import auth
-                from oauth2client.client import GoogleCredentials
-                auth.authenticate_user()
-                gauth.credentials = GoogleCredentials.get_application_default()
         log_file.SetContentString(json.dumps(data))
         log_file.Upload()
     except Exception as e:
@@ -473,6 +463,6 @@ cuda.detect()
 
 for i in range(len(cuda.gpus)):
     log_index = int(input("log_index: ") or 0)
-    threading.Thread(target=worker, args=(log_index, i,), name=f"GPU-{i}").start()
+    threading.Thread(target=worker, args=(log_index, i,), name=f"GPU-{i}-{log_index}").start()
 
 
