@@ -4,10 +4,6 @@ channels:
   - defaults
 dependencies:
   - python=3.12
-  - gh
-  - git
-  - ipykernel
-  - intel-cmplr-lib-rt
   - numpy
   - numba
   - numba-cuda
